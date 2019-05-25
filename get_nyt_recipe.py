@@ -37,7 +37,10 @@ for ingredient in ingredients:
     quantity = ingredient.find('span', attrs={'class': 'quantity'}).text.strip()
     ingred = ingredient.find('span', attrs={'class': 'ingredient-name'}).text.strip()
     if quantity:
-        quantity = str(list(remove_fract(quantity))[0]).rstrip('0').rstrip('.')
+        try:
+            quantity = str(list(remove_fract(quantity))[0]).rstrip('0').rstrip('.')
+        except ValueError:
+            pass
         text = '- {0:>4} {1}'.format(quantity, ingred)
     else:
         text = '-      {}'.format(ingred)
