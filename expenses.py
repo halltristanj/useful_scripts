@@ -25,7 +25,7 @@ def override(df):
         'Internet': 54.99,
         'Mobile Phone': 45,
         'Bank Fee': 59,  # Captial One Membership
-        'Dad Payment': 125,
+        'Payment': 125,
         'Tuition': 470,
     }
 
@@ -51,17 +51,17 @@ def etl(df):
     df.loc[(df['Category'] == 'Mortgage & Rent') & (~df['Description'].str.contains('Marquis')), 'drop'] = True
     df.loc[(df['Category'] == 'Mortgage & Rent') & (df['Description'].str.contains('Marquis')) & (df['Amount'] == 280), 'drop'] = True
 
-    # Remove Tallahassee Utilities
+    # Remove Tall Utils
     df.loc[(df['Description'].str.match('Tall Util Des')), 'drop'] = True
 
-    # Gas & Fuel < $10 is probably not gas and or fuel
+    # Gas & Fuel < $10 is probably not gas and or fuel (snacks)
     df.loc[(df['Category'] == 'Gas & Fuel') & (df['Amount'] < 10), 'drop'] = True
 
-    # Make sure just get FSU tuition
-    df.loc[(df['Category'] == 'Tuition') & (~df['Original Description'].str.contains('fsu', case=False)), 'drop'] = True
+    # Make sure just get tuition
+    df.loc[(df['Category'] == 'Tuition') & (~df['Original Description'].str.contains('abc', case=False)), 'drop'] = True
 
     # Remove a one-time crazy cost
-    df.loc[(df['Category'] == 'Doctor') & (df['Description'] == 'Unchc Mychart'), 'drop'] = True
+    # df.loc[(df['Category'] == 'Doctor') & (df['Description'] == 'asdf'), 'drop'] = True
 
     df = df[df['drop'] == False]
     del df['drop']
@@ -78,10 +78,10 @@ def etl_income(income):
 
     income['drop'] = False
 
-    income.loc[(income['Category'] == 'Paycheck') & (income['Description'].str.contains('Florida State', case=False)), 'drop'] = True
+    income.loc[(income['Category'] == 'Paycheck') & (income['Description'].str.contains('abc', case=False)), 'drop'] = True
 
     # Weird FSU Paycheck
-    income.loc[(income['Category'] == 'Travel') & (income['Description'].str.contains('Florida State', case=False)), 'drop'] = True
+    income.loc[(income['Category'] == 'Travel') & (income['Description'].str.contains('abc', case=False)), 'drop'] = True
 
     income = income[income['drop'] == False]
     del income['drop']
@@ -90,7 +90,7 @@ def etl_income(income):
 df = pd.read_csv('./transactions.csv')
 df = to_date(df)
 
-# Get since Tristan got job
+# Get since 
 start_date_tjob = '2017-11-01'
 
 # Get from a year ago
@@ -112,7 +112,6 @@ income = {
         'Paycheck': 'Income',
         'Federal Tax': 'Income',
         'Rental Income': 'Income',
-        'Rooms To Go CC': 'cc_payment',
         'Credit Card Payment': 'cc_payment'
     }
 
@@ -121,7 +120,7 @@ income = {
 # Mandatory Expenses
 mandatory_list = ['Mortgage & Rent', 'Utilities', 'cc_payment', 'Auto Insurance', 'Gas & Fuel',
         'Groceries', 'Home Insurance', 'Internet', 'Mobile Phone', 'Student Loan', 'Tuition',
-        'Finance Charge', 'Bank Fee', 'Dad Payment', 'Pharmacy', 'Matt Friend Fee', 'Doctor', 'Investments']
+        'Finance Charge', 'Bank Fee', 'Pharmacy', 'Matt Friend Fee', 'Doctor', 'Investments']
 
 mand = {m: df[df['Category'] == m].groupby('ym').sum().mean()['transaction'] for m in mandatory_list}
 mand = pd.Series(mand)
