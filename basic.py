@@ -1,3 +1,5 @@
+""" Some day this will be complete. Just some fun stuff. """
+
 from flask import Flask
 from flask_restful import Resource, Api
 from flask_httpauth import HTTPBasicAuth
