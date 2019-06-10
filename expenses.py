@@ -1,3 +1,8 @@
+""" Old code that parses through some transactions and gets 
+    some stats on expenditures.
+    
+    DEFINITELY some stuff in here that can be better.
+"""
 import sys
 import pandas as pd
 import numpy as np
