@@ -1,3 +1,9 @@
+"""
+Insanely simple and not-so-well-thought-out script on getting a NYT recipe.
+
+NOTE: Still have some issues on special fraction/ingredient measurements
+"""
+
 import requests
 from bs4 import BeautifulSoup
 import textwrap
