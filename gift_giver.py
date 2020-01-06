@@ -1,5 +1,7 @@
 """
 Give a gift to a person who is not in your family.
+
+A totally unscallable solution [TM].
 """
 
 import random
@@ -32,7 +34,7 @@ class GiftGiver:
 
     def giver_alg(self):
         """Create a gift-giving dictionary and fill self.giver_dict"""
-        # Shuffle family membes so always get random first instance (FIFO)
+        # Shuffle family members so always get random first instance (FIFO)
         random.shuffle(self.family_members)
         # Shuffle flat family member list so we randomize that (FIFO)
         random.shuffle(self.family_members_flat)
